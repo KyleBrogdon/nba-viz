@@ -33,9 +33,12 @@ export function loadS4() {
             .range([height, 0])
             .domain([d3.min(data, d => d.BPM) - 1, d3.max(data, d => d.BPM) + 1]);
 
-        svg.append("g")
+            svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickFormat(d3.format(".0s")));
+            .call(d3.axisBottom(x).tickFormat(d3.format(".0s")))
+            .selectAll("text")
+            .attr("transform", "rotate(45)")
+            .style("text-anchor", "start");
 
         svg.append("g")
             .call(d3.axisLeft(y));
