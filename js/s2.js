@@ -5,6 +5,11 @@ function loadS2() {
     container.append("h1").text("NBA Team Instagram Followers");
 
     d3.csv("data/teams.csv").then(data => {
+
+        data.forEach(d => {
+            d.followers = +d.followers;
+            console.log(d.team, d.followers); 
+        });
         data.sort((a, b) => d3.descending(+a.followers, +b.followers));
 
         const margin = { top: 20, right: 20, bottom: 150, left: 60 };

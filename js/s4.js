@@ -67,7 +67,6 @@ function loadS4() {
             .style("text-anchor", "middle")
             .text("Instagram Followers");
 
-        // Tooltip
         container.append("div")
             .attr("id", "tooltip")
             .attr("class", "hidden")
