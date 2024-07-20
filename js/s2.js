@@ -1,3 +1,5 @@
+import { teamColors } from './teamColors.js';
+
 function loadS2() {
     console.log("loadS2 called");
 
@@ -47,7 +49,7 @@ function loadS2() {
             .attr("width", x.bandwidth())
             .attr("y", d => y(d.Followers))
             .attr("height", d => height - y(d.Followers))
-            .attr("fill", "#69b3a2");
+            .attr("fill", d => teamColors[d.Team]);
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)

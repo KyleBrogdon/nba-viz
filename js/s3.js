@@ -1,3 +1,5 @@
+import { teamColors } from './teamColors.js';
+
 function loadS3() {
     const container = d3.select("#container");
     container.html("");
@@ -33,7 +35,7 @@ function loadS3() {
             .attr("cx", d => x(d.wins))
             .attr("cy", d => y(d.followers))
             .attr("r", 5)
-            .attr("fill", d => color(d.team));
+            .attr("fill", d => teamColors[d.Team]);
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
