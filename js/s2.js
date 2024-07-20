@@ -50,13 +50,25 @@ function loadS2() {
         svg.append("g")
             .call(d3.axisLeft(y));
 
+        svg.append("text")
+            .attr("transform", `translate(${width / 2},${height + margin.bottom - 10})`)
+            .style("text-anchor", "middle")
+            .text("Team");
+
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x", 0 - height / 2)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Instagram Followers");
 
         container.append("button")
             .text("Previous")
             .on("click", loadS1);
-            
+
         container.append("button")
             .text("Next")
             .on("click", loadS3);
-    });
+    }).catch(error => console.log("Error loading data for S2: ", error));
 }

@@ -42,6 +42,19 @@ function loadS3() {
         svg.append("g")
             .call(d3.axisLeft(y));
 
+        svg.append("text")
+            .attr("transform", `translate(${width / 2},${height + margin.bottom - 10})`)
+            .style("text-anchor", "middle")
+            .text("Team Wins");
+
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x", 0 - height / 2)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Instagram Followers");
+
         container.append("button")
             .text("Previous")
             .on("click", loadS2);
@@ -49,5 +62,5 @@ function loadS3() {
         container.append("button")
             .text("Next")
             .on("click", loadS4);
-    });
+    }).catch(error => console.log("Error loading data for S3: ", error));
 }

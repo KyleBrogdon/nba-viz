@@ -1,5 +1,4 @@
 function loadS1() {
-    console.log("loadS1 called");
     const container = d3.select("#container");
     container.html("");
 

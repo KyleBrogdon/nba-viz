@@ -37,10 +37,10 @@ function loadS4() {
             .on("mouseover", function(event, d) {
                 const [x, y] = d3.pointer(event);
                 d3.select("#tooltip")
-                    .style("left", `${x + 10}px`)
-                    .style("top", `${y + 10}px`)
+                    .style("left", `${event.pageX + 10}px`)
+                    .style("top", `${event.pageY + 10}px`)
                     .select("#value")
-                    .text(`${d.Player}, ${d.team}, BPM: ${d.BPM}, Followers: ${d.followers}`);
+                    .text(`${d.player}, ${d.team}, BPM: ${d.BPM}, Followers: ${d.followers}`);
                 d3.select("#tooltip").classed("hidden", false);
             })
             .on("mouseout", function() {
@@ -54,14 +54,32 @@ function loadS4() {
         svg.append("g")
             .call(d3.axisLeft(y));
 
-        container.append("button")
-            .text("Previous")
-            .on("click", loadS3);
+        svg.append("text")
+            .attr("transform", `translate(${width / 2},${height + margin.bottom - 10})`)
+            .style("text-anchor", "middle")
+            .text("BPM");
 
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x", 0 - height / 2)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Instagram Followers");
+
+        // Tooltip
         container.append("div")
             .attr("id", "tooltip")
             .attr("class", "hidden")
             .append("p")
             .attr("id", "value");
-    });
+
+        container.append("button")
+            .text("Previous")
+            .on("click", loadS3);
+
+        container.append("button")
+            .text("Next")
+            .on("click", loadS1);
+    }).catch(error => console.log("Error loading data for S4: ", error));
 }
