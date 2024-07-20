@@ -37,7 +37,7 @@ export function loadS4() {
             .attr("cx", d => x(d.BPM))
             .attr("cy", d => y(d.followers))
             .attr("r", 5)
-            .attr("fill", d => teamColors[d.Team])
+            .style("fill", d => teamColors[d.Team])
             .on("mouseover", function(event, d) {
                 const [x, y] = d3.pointer(event);
                 d3.select("#tooltip")

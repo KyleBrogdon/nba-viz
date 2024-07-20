@@ -38,7 +38,7 @@ export function loadS3() {
             .attr("cx", d => x(d.wins))
             .attr("cy", d => y(d.followers))
             .attr("r", 5)
-            .attr("fill", d => teamColors[d.Team]);
+            .style("fill", d => teamColors[d.Team]);
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
