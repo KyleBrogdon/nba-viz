@@ -33,15 +33,24 @@ export function loadS4() {
             .range([height, 0])
             .domain([d3.min(data, d => d.BPM) - 1, d3.max(data, d => d.BPM) + 1]);
 
-            svg.append("g")
+        const xAxis = svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickFormat(d3.format(".0s")))
-            .selectAll("text")
-            .attr("transform", "rotate(45)")
-            .style("text-anchor", "start");
+            .call(d3.axisBottom(x).tickFormat(d3.format(".0s")));
 
-        svg.append("g")
+        const yAxis = svg.append("g")
             .call(d3.axisLeft(y));
+
+        xAxis.append("text")
+            .attr("class", "x-axis-label")
+            .attr("transform", `translate(${width}, 40)`)
+            .style("text-anchor", "end")
+            .text(d3.max(data, d => d.Followers).toLocaleString());
+
+        yAxis.append("text")
+            .attr("class", "y-axis-label")
+            .attr("transform", `translate(-10, -10)`)
+            .style("text-anchor", "end")
+            .text(d3.max(data, d => d.BPM).toLocaleString());
 
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
@@ -52,12 +61,12 @@ export function loadS4() {
             .enter().append("circle")
             .attr("cx", d => x(d.Followers))
             .attr("cy", d => y(d.BPM))
-            .attr("r", 10) 
+            .attr("r", 10)
             .style("fill", d => teamColors[d.Team] || "#69b3a2")
             .on("mouseover", function(event, d) {
                 d3.select(this).transition()
                     .duration(200)
-                    .attr("r", 14); 
+                    .attr("r", 15);
 
                 tooltip.transition()
                     .duration(200)
@@ -83,7 +92,7 @@ export function loadS4() {
 
         svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left + 60)
+            .attr("y", 0 - margin.left + 40)
             .attr("x", 0 - height / 2)
             .attr("dy", "1em")
             .style("text-anchor", "middle")
