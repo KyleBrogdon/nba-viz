@@ -50,6 +50,11 @@ function loadS2() {
         svg.append("g")
             .call(d3.axisLeft(y));
 
+
+        container.append("button")
+            .text("Previous")
+            .on("click", loadS1);
+            
         container.append("button")
             .text("Next")
             .on("click", loadS3);

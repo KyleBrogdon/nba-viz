@@ -54,6 +54,10 @@ function loadS4() {
         svg.append("g")
             .call(d3.axisLeft(y));
 
+        container.append("button")
+            .text("Previous")
+            .on("click", loadS3);
+
         container.append("div")
             .attr("id", "tooltip")
             .attr("class", "hidden")
