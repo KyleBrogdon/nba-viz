@@ -26,7 +26,7 @@ export const teamColors = {
     "Sacramento Kings": "#5A2D81",
     "Memphis Grizzlies": "#5D76A9",
     "Orlando Magic": "#0077C0",
-    "Washington Wizards": "#e31837",
+    "Washington Wizards": "#002b5c",
     "Detroit Pistons": "#c8102e",
     "Utah Jazz": "#002B5C"
 };
