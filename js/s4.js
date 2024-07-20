@@ -25,9 +25,9 @@ export function loadS4() {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        const x = d3.scaleLinear()
+        const x = d3.scaleLog()
             .range([0, width])
-            .domain([0, d3.max(data, d => d.Followers)]);
+            .domain([d3.min(data, d => d.Followers), d3.max(data, d => d.Followers)]);
 
         const y = d3.scaleLinear()
             .range([height, 0])
@@ -35,7 +35,7 @@ export function loadS4() {
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).tickFormat(d3.format(".0s")));
 
         svg.append("g")
             .call(d3.axisLeft(y));
@@ -49,12 +49,12 @@ export function loadS4() {
             .enter().append("circle")
             .attr("cx", d => x(d.Followers))
             .attr("cy", d => y(d.BPM))
-            .attr("r", 5)
+            .attr("r", 10) 
             .style("fill", d => teamColors[d.Team] || "#69b3a2")
             .on("mouseover", function(event, d) {
                 d3.select(this).transition()
                     .duration(200)
-                    .attr("r", 13);
+                    .attr("r", 14); 
 
                 tooltip.transition()
                     .duration(200)
@@ -76,7 +76,7 @@ export function loadS4() {
         svg.append("text")
             .attr("transform", `translate(${width / 2},${height + margin.bottom - 40})`)
             .style("text-anchor", "middle")
-            .text("Instagram Followers");
+            .text("Instagram Followers (Log Scale)");
 
         svg.append("text")
             .attr("transform", "rotate(-90)")
