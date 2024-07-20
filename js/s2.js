@@ -1,40 +1,22 @@
 import { teamColors } from './teamColors.js';
-import { loadS1 } from './s1.js';
 import { loadS3 } from './s3.js';
 
 export function loadS2() {
-    console.log("loadS2 called");
-
     const container = d3.select("#container");
     container.html("");
 
-    container.append("h1").text("NBA Team Instagram Followers");
+    container.append("h1").text("Instagram Followers Per Team");
 
-    Promise.all([
-        d3.csv("data/teams.csv"),
-        d3.csv("data/merged_players_bpm.csv")
-    ]).then(([teamsData, playersData]) => {
-        const mostFollowedPlayers = {};
+    d3.csv("data/teams.csv").then(data => {
+        const mergedPlayers = d3.csv("data/merged_players.csv");
 
-        playersData.forEach(d => {
-            if (!mostFollowedPlayers[d.Team] || mostFollowedPlayers[d.Team].Followers < +d.Followers) {
-                mostFollowedPlayers[d.Team] = {
-                    player: d.player,
-                    followers: +d.Followers
-                };
-            }
-        });
-
-        teamsData.forEach(d => {
+        data.forEach(d => {
             d.Followers = +d.Followers;
-            d.MostFollowedPlayer = mostFollowedPlayers[d.Team]?.player || "N/A";
-            d.MostFollowedPlayerFollowers = mostFollowedPlayers[d.Team]?.followers || 0;
-            console.log(`Team: ${d.Team}, Followers: ${d.Followers}, Most Followed Player: ${d.MostFollowedPlayer}`);
         });
 
-        teamsData.sort((a, b) => b.Followers - a.Followers);
+        data.sort((a, b) => b.Followers - a.Followers);
 
-        const margin = { top: 20, right: 20, bottom: 160, left: 150 };
+        const margin = { top: 50, right: 20, bottom: 150, left: 150 };
         const width = 1400 - margin.left - margin.right;
         const height = 900 - margin.top - margin.bottom;
 
@@ -47,45 +29,30 @@ export function loadS2() {
         const x = d3.scaleBand()
             .range([0, width])
             .padding(0.1)
-            .domain(teamsData.map(d => d.Team));
+            .domain(data.map(d => d.Team));
 
         const y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, d3.max(teamsData, d => d.Followers)]);
+            .domain([0, d3.max(data, d => d.Followers)]);
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x))
             .selectAll("text")
-            .attr("transform", "rotate(-45)")
-            .style("text-anchor", "end");
-
-        const yAxis = svg.append("g")
-            .call(d3.axisLeft(y));
-
-        yAxis.append("text")
-            .attr("class", "y-axis-label")
-            .attr("transform", `translate(-40, ${y(y.domain()[1])})`)
-            .attr("dy", "-0.5em")
             .style("text-anchor", "end")
-            .text(d3.max(teamsData, d => d.Followers).toLocaleString());
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-45)");
 
-        yAxis.selectAll("g.tick:last-of-type text")
-            .append("tspan")
-            .attr("x", 0)
-            .attr("dy", "-1.5em")
-            .text(d3.max(teamsData, d => d.Followers).toLocaleString())
+        svg.append("g")
+            .call(d3.axisLeft(y));
 
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
-            .style("opacity", 0)
-            .style("background-color", "gray")
-            .style("padding", "5px")
-            .style("border-radius", "5px")
-            .style("position", "absolute");
+            .style("opacity", 0);
 
         svg.selectAll(".bar")
-            .data(teamsData)
+            .data(data)
             .enter().append("rect")
             .attr("class", "bar")
             .attr("x", d => x(d.Team))
@@ -96,19 +63,20 @@ export function loadS2() {
             .on("mouseover", function(event, d) {
                 d3.select(this).transition()
                     .duration(200)
-                    .style("fill-opacity", 0.7);
+                    .style("fill", d3.rgb(teamColors[d.Team]).darker(2));
 
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
-                tooltip.html(`Team: ${d.Team}<br/>Followers: ${d.Followers.toLocaleString()}<br/>Most Followed Player: ${d.MostFollowedPlayer}`)
+                const player = mergedPlayers.find(p => p.Team === d.Team);
+                tooltip.html(`Team: ${d.Team}<br/>Followers: ${d.Followers.toLocaleString()}<br/>Most Followed Player: ${player ? player.Player : 'N/A'}`)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function(d) {
                 d3.select(this).transition()
                     .duration(200)
-                    .style("fill-opacity", 1);
+                    .style("fill", teamColors[d.Team] || "#69b3a2");
 
                 tooltip.transition()
                     .duration(500)
@@ -116,17 +84,18 @@ export function loadS2() {
             });
 
         svg.append("text")
-            .attr("transform", `translate(${width / 2},${height + margin.bottom - 40})`)
-            .style("text-anchor", "middle")
-            .text("Team");
-
-        svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left + 40)
-            .attr("x", 0 - height / 2)
+            .attr("y", 0 - margin.left)
+            .attr("x", 0 - (height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Instagram Followers");
+            .text("Team Instagram Followers");
+
+        svg.append("text")
+            .attr("x", -margin.left + 10)
+            .attr("y", y(d3.max(data, d => d.Followers)) - 10)
+            .attr("text-anchor", "start")
+            .text(d3.max(data, d => d.Followers).toLocaleString());
 
         container.append("button")
             .text("Previous")

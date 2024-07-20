@@ -2,12 +2,11 @@ import { teamColors } from './teamColors.js';
 import { loadS4 } from './s4.js';
 import { loadS2 } from './s2.js';
 
-
 export function loadS3() {
     const container = d3.select("#container");
     container.html("");
 
-    container.append("h1").text("NBA Team Wins vs Instagram Followers");
+    container.append("h1").text("Team Wins vs Team Instagram Followers");
 
     d3.csv("data/teams.csv").then(data => {
         data.forEach(d => {
@@ -26,9 +25,9 @@ export function loadS3() {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        const x = d3.scaleLog()
+        const x = d3.scaleLinear()
             .range([0, width])
-            .domain([d3.min(data, d => d.Followers), d3.max(data, d => d.Followers)]);
+            .domain([0, d3.max(data, d => d.Followers)]);
 
         const y = d3.scaleLinear()
             .range([height, 0])
@@ -41,17 +40,17 @@ export function loadS3() {
         const yAxis = svg.append("g")
             .call(d3.axisLeft(y));
 
-        xAxis.append("text")
-            .attr("class", "x-axis-label")
-            .attr("transform", `translate(${width}, 40)`)
-            .style("text-anchor", "end")
-            .text(d3.max(data, d => d.Followers).toLocaleString());
-
         yAxis.append("text")
             .attr("class", "y-axis-label")
             .attr("transform", `translate(-10, -10)`)
             .style("text-anchor", "end")
             .text(d3.max(data, d => d.Wins).toLocaleString());
+
+        xAxis.append("text")
+            .attr("class", "x-axis-label")
+            .attr("transform", `translate(${width}, 40)`)
+            .style("text-anchor", "end")
+            .text(d3.max(data, d => d.Followers).toLocaleString());
 
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
@@ -62,7 +61,7 @@ export function loadS3() {
             .enter().append("circle")
             .attr("cx", d => x(d.Followers))
             .attr("cy", d => y(d.Wins))
-            .attr("r", 14) 
+            .attr("r", 14)
             .style("fill", d => teamColors[d.Team] || "#69b3a2")
             .on("mouseover", function(event, d) {
                 d3.select(this).transition()
@@ -89,7 +88,7 @@ export function loadS3() {
         svg.append("text")
             .attr("transform", `translate(${width / 2},${height + margin.bottom - 40})`)
             .style("text-anchor", "middle")
-            .text("Instagram Followers (Log Scale)");
+            .text("Team Instagram Followers");
 
         svg.append("text")
             .attr("transform", "rotate(-90)")

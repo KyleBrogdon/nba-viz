@@ -20,7 +20,7 @@ body {
 .tooltip {
     position: absolute;
     text-align: center;
-    width: 120px;
+    width: 150px;
     height: auto;
     padding: 8px;
     font: 12px sans-serif;
