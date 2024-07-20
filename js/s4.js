@@ -12,9 +12,8 @@ export function loadS4() {
         data.forEach(d => {
             d.BPM = +d.BPM; 
             d.Followers = +d.Followers; 
-            console.log(`player: ${d.player}, BPM: ${d.BPM}, Followers: ${d.Followers}`);
+            console.log(`player: ${d.player}, BPM: ${d.BPM}, Followers: ${d.Followers}`); 
         });
-        // const filteredData = data.filter(d => !isNaN(d.BPM) && !isNaN(d.Followers));
 
         const margin = { top: 20, right: 20, bottom: 150, left: 150 };
         const width = 1400 - margin.left - margin.right;
@@ -28,11 +27,11 @@ export function loadS4() {
 
         const x = d3.scaleLinear()
             .range([0, width])
-            .domain([d3.min(filteredData, d => d.BPM), d3.max(filteredData, d => d.BPM)]);
+            .domain([d3.min(data, d => d.BPM) - 1, d3.max(data, d => d.BPM) + 1]);
 
         const y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, d3.max(filteredData, d => d.Followers)]);
+            .domain([0, d3.max(data, d => d.Followers)]);
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
@@ -46,24 +45,12 @@ export function loadS4() {
             .style("opacity", 0);
 
         svg.selectAll("circle")
-            .data(filteredData)
+            .data(data)
             .enter().append("circle")
-            .attr("cx", d => {
-                const cx = x(d.BPM);
-                console.log(`Player: ${d.Player}, BPM: ${d.BPM}, CX: ${cx}`); // Debugging: Check x positioning
-                return cx;
-            })
-            .attr("cy", d => {
-                const cy = y(d.Followers);
-                console.log(`Player: ${d.Player}, Followers: ${d.Followers}, CY: ${cy}`); 
-                return cy;
-            })
+            .attr("cx", d => x(d.BPM))
+            .attr("cy", d => y(d.Followers))
             .attr("r", 5)
-            .style("fill", d => {
-                const color = teamColors[d.Team] || "#69b3a2";
-                console.log(`Player: ${d.Player}, Team: ${d.Team}, Color: ${color}`); 
-                return color;
-            })
+            .style("fill", d => teamColors[d.Team] || "#69b3a2")
             .on("mouseover", function(event, d) {
                 d3.select(this).transition()
                     .duration(200)
@@ -72,14 +59,14 @@ export function loadS4() {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
-                tooltip.html(`Player: ${d.Player}<br/>Team: ${d.Team}<br/>BPM: ${d.BPM}<br/>Followers: ${d.Followers}`)
+                tooltip.html(`Player: ${d.player}<br/>Team: ${d.Team}<br/>BPM: ${d.BPM}<br/>Followers: ${d.Followers}`)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function(d) {
                 d3.select(this).transition()
                     .duration(200)
-                    .attr("r", 5); 
+                    .attr("r", 5);
 
                 tooltip.transition()
                     .duration(500)
