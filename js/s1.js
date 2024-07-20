@@ -1,3 +1,5 @@
+import { loadS2 } from './s2.js';
+
 export function loadS1() {
     const container = d3.select("#container");
     container.html("");
