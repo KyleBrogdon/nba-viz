@@ -1,4 +1,4 @@
-function loadS1() {
+export function loadS1() {
     const container = d3.select("#container");
     container.html("");
 

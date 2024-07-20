@@ -1,6 +1,6 @@
 import { teamColors } from './teamColors.js';
 
-function loadS2() {
+export function loadS2() {
     console.log("loadS2 called");
 
     const container = d3.select("#container");

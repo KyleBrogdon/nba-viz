@@ -1,6 +1,6 @@
 import { teamColors } from './teamColors.js';
 
-function loadS3() {
+export function loadS3() {
     const container = d3.select("#container");
     container.html("");
 
