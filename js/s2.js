@@ -21,7 +21,7 @@ function loadS2() {
 
         const margin = { top: 20, right: 20, bottom: 160, left: 150 }; 
         const width = 1300 - margin.left - margin.right;
-        const height = 500 - margin.top - margin.bottom;
+        const height = 700 - margin.top - margin.bottom;
 
         const svg = container.append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -31,7 +31,7 @@ function loadS2() {
 
         const x = d3.scaleBand()
             .range([0, width])
-            .padding(0.5)
+            .padding(0.3)
             .domain(data.map(d => d.Team));
 
         const y = d3.scaleLinear()
