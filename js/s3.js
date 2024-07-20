@@ -28,11 +28,11 @@ export function loadS3() {
 
         const x = d3.scaleLinear()
             .range([0, width])
-            .domain([0, d3.max(data, d => d.Wins)]);
+            .domain([0, d3.max(data, d => d.Followers)]);
 
         const y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, d3.max(data, d => d.Followers)]);
+            .domain([0, d3.max(data, d => d.Wins)]);
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
@@ -41,30 +41,47 @@ export function loadS3() {
         svg.append("g")
             .call(d3.axisLeft(y));
 
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
         svg.selectAll("circle")
             .data(data)
           .enter().append("circle")
             .attr("cx", d => {
-                const cx = x(d.Wins);
-                console.log(`Team: ${d.Team}, Wins: ${d.Wins}, CX: ${cx}`); 
+                const cx = x(d.Followers);
+                console.log(`Team: ${d.Team}, Followers: ${d.Followers}, CX: ${cx}`);
                 return cx;
             })
             .attr("cy", d => {
-                const cy = y(d.Followers);
-                console.log(`Team: ${d.Team}, Followers: ${d.Followers}, CY: ${cy}`); 
+                const cy = y(d.Wins);
+                console.log(`Team: ${d.Team}, Wins: ${d.Wins}, CY: ${cy}`);
                 return cy;
             })
-            .attr("r", 5)
+            .attr("r", 10)
             .style("fill", d => {
                 const color = teamColors[d.Team] || "#69b3a2";
-                console.log(`Team: ${d.Team}, Color: ${color}`); 
+                console.log(`Team: ${d.Team}, Color: ${color}`);
                 return color;
+            })
+            .on("mouseover", function(event, d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html(`Team: ${d.Team}<br/>Wins: ${d.Wins}<br/>Followers: ${d.Followers}`)
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
             });
 
         svg.append("text")
             .attr("transform", `translate(${width / 2},${height + margin.bottom - 40})`)
             .style("text-anchor", "middle")
-            .text("Team Wins");
+            .text("Instagram Followers");
 
         svg.append("text")
             .attr("transform", "rotate(-90)")
@@ -72,7 +89,7 @@ export function loadS3() {
             .attr("x", 0 - height / 2)
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Instagram Followers");
+            .text("Team Wins");
 
         container.append("button")
             .text("Previous")
