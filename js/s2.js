@@ -49,9 +49,14 @@ export function loadS2() {
             .attr("height", d => height - y(d.Followers))
             .attr("fill", d => {
                 const color = teamColors[d.Team] || "#69b3a2";
-                console.log(d.Team, color);
+                console.log(`Team: ${d.Team}, Color: ${color}`)
                 return color;
+            })
+            .each(function(d) {
+                console.log(`Element for ${d.Team}:`, this);
+                console.log(`Fill color: ${this.style.fill}`)
             });
+
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
