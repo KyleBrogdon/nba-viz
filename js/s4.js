@@ -8,7 +8,7 @@ export function loadS4() {
 
     container.append("h1").text("Player BPM vs Individual Instagram Followers");
 
-    d3.csv("data/players.csv").then(data => {
+    d3.csv("data/merged_players_bpm.csv").then(data => {
         data.forEach(d => {
             d.BPM = +d.BPM;
             d.Followers = +d.Followers;
