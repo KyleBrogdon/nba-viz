@@ -19,7 +19,7 @@ function loadS2() {
 
         data.sort((a, b) => d3.descending(a.Followers, b.Followers));
 
-        const margin = { top: 20, right: 20, bottom: 150, left: 100 };
+        const margin = { top: 20, right: 20, bottom: 150, left: 120 }; 
         const width = 960 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
 
@@ -31,7 +31,7 @@ function loadS2() {
 
         const x = d3.scaleBand()
             .range([0, width])
-            .padding(0.2) 
+            .padding(0.2)
             .domain(data.map(d => d.Team));
 
         const y = d3.scaleLinear()
@@ -47,7 +47,7 @@ function loadS2() {
             .attr("width", x.bandwidth())
             .attr("y", d => y(d.Followers))
             .attr("height", d => height - y(d.Followers))
-            .attr("fill", d => teamColors[d.Team] || "#69b3a2");
+            .attr("fill", "#69b3a2");
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
@@ -66,7 +66,7 @@ function loadS2() {
 
         svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left + 20)
+            .attr("y", 0 - margin.left + 40) 
             .attr("x", 0 - height / 2)
             .attr("dy", "1em")
             .style("text-anchor", "middle")
