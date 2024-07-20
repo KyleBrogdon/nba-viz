@@ -13,6 +13,9 @@ export function loadS4() {
             d.BPM = +d.BPM;
             d.Followers = +d.Followers;
             console.log(`Player: ${d.player}, BPM: ${d.BPM}, Followers: ${d.Followers}`);
+            if (d.player === "Nikola Jokic") {
+                console.log("Nikola Jokic found:", d);
+            }
         });
 
         const margin = { top: 50, right: 20, bottom: 150, left: 150 };
