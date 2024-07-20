@@ -2,15 +2,12 @@ function loadS2() {
     const container = d3.select("#container");
     container.html(""); 
 
-    container.append("h1").text("Team Account Followers");
+    container.append("h1").text("NBA Team Instagram Followers");
 
-    d3.csv("data/merged_data.csv").then(data => {
-        const teamData = d3.nest()
-            .key(d => d.Team)
-            .rollup(v => d3.sum(v, d => d.Followers))
-            .entries(data);
+    d3.csv("data/teams.csv").then(data => {
+        data.sort((a, b) => d3.descending(+a.followers, +b.followers));
 
-        const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+        const margin = { top: 20, right: 20, bottom: 150, left: 60 };
         const width = 960 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
 
@@ -23,21 +20,25 @@ function loadS2() {
         const x = d3.scaleBand()
             .range([0, width])
             .padding(0.1)
-            .domain(teamData.map(d => d.key));
+            .domain(data.map(d => d.team));
 
         const y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, d3.max(teamData, d => d.value)]);
+            .domain([0, d3.max(data, d => +d.followers)]);
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain(data.map(d => d.team));
 
         svg.append("g")
             .selectAll(".bar")
-            .data(teamData)
+            .data(data)
           .enter().append("rect")
             .attr("class", "bar")
-            .attr("x", d => x(d.key))
+            .attr("x", d => x(d.team))
             .attr("width", x.bandwidth())
-            .attr("y", d => y(d.value))
-            .attr("height", d => height - y(d.value));
+            .attr("y", d => y(d.followers))
+            .attr("height", d => height - y(d.followers))
+            .attr("fill", d => color(d.team));
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)

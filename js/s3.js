@@ -2,18 +2,10 @@ function loadS3() {
     const container = d3.select("#container");
     container.html("");
 
-    container.append("h1").text("Team Followers vs. Team Wins");
+    container.append("h1").text("NBA Team Wins vs Instagram Followers");
 
-    d3.csv("data/merged_data.csv").then(data => {
-        const teamData = d3.nest()
-            .key(d => d.Team)
-            .rollup(v => ({
-                followers: d3.sum(v, d => d.Followers),
-                wins: d3.mean(v, d => d.Wins)
-            }))
-            .entries(data);
-
-        const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    d3.csv("data/teams.csv").then(data => {
+        const margin = { top: 20, right: 20, bottom: 50, left: 60 };
         const width = 960 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
 
@@ -25,24 +17,27 @@ function loadS3() {
 
         const x = d3.scaleLinear()
             .range([0, width])
-            .domain([0, d3.max(teamData, d => d.value.followers)]);
+            .domain([0, d3.max(data, d => +d.wins)]);
 
         const y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, d3.max(teamData, d => d.value.wins)]);
+            .domain([0, d3.max(data, d => +d.followers)]);
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain(data.map(d => d.team));
 
         svg.append("g")
             .selectAll("circle")
-            .data(teamData)
+            .data(data)
           .enter().append("circle")
-            .attr("cx", d => x(d.value.followers))
-            .attr("cy", d => y(d.value.wins))
+            .attr("cx", d => x(d.wins))
+            .attr("cy", d => y(d.followers))
             .attr("r", 5)
-            .attr("fill", "steelblue");
+            .attr("fill", d => color(d.team));
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
 
         svg.append("g")
             .call(d3.axisLeft(y));
