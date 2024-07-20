@@ -4,7 +4,7 @@ import { loadS1 } from './s1.js';
 
 export function loadS4() {
     const container = d3.select("#container");
-    container.html("");
+    container.html(""); 
 
     container.append("h1").text("NBA Player BPM vs Instagram Followers");
 
@@ -12,10 +12,10 @@ export function loadS4() {
         data.forEach(d => {
             d.BPM = +d.BPM; 
             d.Followers = +d.Followers; 
-            console.log(`player: ${d.player}, BPM: ${d.BPM}, Followers: ${d.Followers}`); 
+            console.log(`player: ${d.player}, BPM: ${d.BPM}, Followers: ${d.Followers}`);
         });
 
-        const margin = { top: 20, right: 20, bottom: 150, left: 150 };
+        const margin = { top: 50, right: 20, bottom: 150, left: 150 };
         const width = 1400 - margin.left - margin.right;
         const height = 900 - margin.top - margin.bottom;
 
@@ -47,9 +47,9 @@ export function loadS4() {
         svg.selectAll("circle")
             .data(data)
             .enter().append("circle")
-            .attr("cx", d => x(d.BPM))
-            .attr("cy", d => y(d.Followers))
-            .attr("r", 15)
+            .attr("cx", d => x(d.Followers))
+            .attr("cy", d => y(d.BPM))
+            .attr("r", 5)
             .style("fill", d => teamColors[d.Team] || "#69b3a2")
             .on("mouseover", function(event, d) {
                 d3.select(this).transition()
@@ -76,7 +76,7 @@ export function loadS4() {
         svg.append("text")
             .attr("transform", `translate(${width / 2},${height + margin.bottom - 40})`)
             .style("text-anchor", "middle")
-            .text("Player BPM");
+            .text("Instagram Followers");
 
         svg.append("text")
             .attr("transform", "rotate(-90)")
@@ -84,7 +84,7 @@ export function loadS4() {
             .attr("x", 0 - height / 2)
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Instagram Followers");
+            .text("Player BPM");
 
         container.append("button")
             .text("Previous")
