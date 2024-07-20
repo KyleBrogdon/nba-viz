@@ -19,7 +19,7 @@ function loadS2() {
 
         data.sort((a, b) => d3.descending(a.Followers, b.Followers));
 
-        const margin = { top: 20, right: 20, bottom: 150, left: 120 }; 
+        const margin = { top: 20, right: 20, bottom: 150, left: 160 }; 
         const width = 960 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
 
@@ -31,7 +31,7 @@ function loadS2() {
 
         const x = d3.scaleBand()
             .range([0, width])
-            .padding(0.2)
+            .padding(0.5)
             .domain(data.map(d => d.Team));
 
         const y = d3.scaleLinear()
