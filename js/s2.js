@@ -8,7 +8,11 @@ function loadS2() {
 
         data.forEach(d => {
             d.followers = +d.followers;
-            console.log(d.team, d.followers); 
+            if (isNaN(d.followers)) {
+                console.error(`Invalid follower count for ${d.team}: ${d.followers}`);
+            } else {
+                console.log(`Team: ${d.team}, Followers: ${d.followers}`);
+            }
         });
         data.sort((a, b) => d3.descending(+a.followers, +b.followers));
 
@@ -42,7 +46,14 @@ function loadS2() {
             .attr("x", d => x(d.team))
             .attr("width", x.bandwidth())
             .attr("y", d => y(d.followers))
-            .attr("height", d => height - y(d.followers))
+            .attr("height", d => {
+                const barHeight = height - y(d.followers);
+                console.log(`Team: ${d.team}, Height: ${barHeight}`); 
+                if (isNaN(barHeight)) {
+                    console.error(`NaN height for ${d.team}`);
+                }
+                return barHeight;
+            })
             .attr("fill", d => color(d.team));
 
         svg.append("g")
