@@ -1,20 +1,28 @@
 function loadS2() {
+    console.log("loadS2 called");
+
     const container = d3.select("#container");
-    container.html(""); 
+    container.html("");
 
     container.append("h1").text("NBA Team Instagram Followers");
 
     d3.csv("data/teams.csv").then(data => {
+        if (data.length > 0) {
+            console.log("CSV Data Loaded. Column Headers: ", Object.keys(data[0]));
+        } else {
+            console.error("CSV Data is empty or not loaded correctly.");
+        }
 
         data.forEach(d => {
-            d.followers = +d.followers;
-            if (isNaN(d.followers)) {
-                console.error(`Invalid follower count for ${d.team}: ${d.followers}`);
+            d.Followers = +d.Followers;
+            if (isNaN(d.Followers)) {
+                console.error(`Invalid follower count for ${d.Team}: ${d.Followers}`);
             } else {
-                console.log(`Team: ${d.team}, Followers: ${d.followers}`);
+                console.log(`Team: ${d.Team}, Followers: ${d.Followers}`);
             }
         });
-        data.sort((a, b) => d3.descending(+a.followers, +b.followers));
+
+        data.sort((a, b) => d3.descending(a.Followers, b.Followers));
 
         const margin = { top: 20, right: 20, bottom: 150, left: 60 };
         const width = 960 - margin.left - margin.right;
@@ -29,32 +37,32 @@ function loadS2() {
         const x = d3.scaleBand()
             .range([0, width])
             .padding(0.1)
-            .domain(data.map(d => d.team));
+            .domain(data.map(d => d.Team));
 
         const y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, d3.max(data, d => +d.followers)]);
+            .domain([0, d3.max(data, d => d.Followers)]);
 
         const color = d3.scaleOrdinal(d3.schemeCategory10)
-            .domain(data.map(d => d.team));
+            .domain(data.map(d => d.Team));
 
         svg.append("g")
             .selectAll(".bar")
             .data(data)
           .enter().append("rect")
             .attr("class", "bar")
-            .attr("x", d => x(d.team))
+            .attr("x", d => x(d.Team))
             .attr("width", x.bandwidth())
-            .attr("y", d => y(d.followers))
+            .attr("y", d => y(d.Followers))
             .attr("height", d => {
-                const barHeight = height - y(d.followers);
-                console.log(`Team: ${d.team}, Height: ${barHeight}`); 
+                const barHeight = height - y(d.Followers);
+                console.log(`Team: ${d.Team}, Height: ${barHeight}`);
                 if (isNaN(barHeight)) {
-                    console.error(`NaN height for ${d.team}`);
+                    console.error(`NaN height for ${d.Team}`);
                 }
                 return barHeight;
             })
-            .attr("fill", d => color(d.team));
+            .attr("fill", d => color(d.Team));
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
