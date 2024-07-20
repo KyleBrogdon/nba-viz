@@ -25,26 +25,30 @@ export function loadS4() {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        const x = d3.scaleLog()
+        const x = d3.scaleLinear()
             .range([0, width])
-            .domain([d3.min(data, d => d.Followers), d3.max(data, d => d.Followers)]);
+            .domain([0, d3.max(data, d => d.Followers)]);
 
         const y = d3.scaleLinear()
             .range([height, 0])
-            .domain([d3.min(data, d => d.BPM) - 1, d3.max(data, d => d.BPM) + 1]);
+            .domain([d3.min(data, d => d.BPM), d3.max(data, d => d.BPM)]);
 
         const xAxis = svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickFormat(d3.format(".0s")));
+            .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format(".2s")));
 
-        const yAxis = svg.append("g")
-            .call(d3.axisLeft(y));
+        xAxis.selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
 
         xAxis.append("text")
             .attr("class", "x-axis-label")
             .attr("transform", `translate(${width}, 40)`)
             .style("text-anchor", "end")
             .text(d3.max(data, d => d.Followers).toLocaleString());
+
+        const yAxis = svg.append("g")
+            .call(d3.axisLeft(y).ticks(10).tickFormat(d3.format("d")));
 
         yAxis.append("text")
             .attr("class", "y-axis-label")
@@ -54,7 +58,11 @@ export function loadS4() {
 
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
-            .style("opacity", 0);
+            .style("opacity", 0)
+            .style("background-color", "gray")
+            .style("padding", "5px")
+            .style("border-radius", "5px")
+            .style("position", "absolute");
 
         svg.selectAll("circle")
             .data(data)
@@ -71,7 +79,7 @@ export function loadS4() {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
-                tooltip.html(`Player: ${d.player}<br/>Team: ${d.Team}<br/>BPM: ${d.BPM}<br/>Followers: ${d.Followers}`)
+                tooltip.html(`Player: ${d.player}<br/>BPM: ${d.BPM}<br/>Followers: ${d.Followers.toLocaleString()}`)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
@@ -88,7 +96,7 @@ export function loadS4() {
         svg.append("text")
             .attr("transform", `translate(${width / 2},${height + margin.bottom - 40})`)
             .style("text-anchor", "middle")
-            .text("Instagram Followers (Log Scale)");
+            .text("Instagram Followers");
 
         svg.append("text")
             .attr("transform", "rotate(-90)")
@@ -101,9 +109,5 @@ export function loadS4() {
         container.append("button")
             .text("Previous")
             .on("click", loadS3);
-
-        container.append("button")
-            .text("Next")
-            .on("click", loadS1);
     }).catch(error => console.log("Error loading data for S4: ", error));
 }

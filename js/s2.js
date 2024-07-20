@@ -34,7 +34,7 @@ export function loadS2() {
 
         teamsData.sort((a, b) => b.Followers - a.Followers);
 
-        const margin = { top: 20, right: 20, bottom: 160, left: 100 };
+        const margin = { top: 20, right: 20, bottom: 160, left: 150 };
         const width = 1400 - margin.left - margin.right;
         const height = 900 - margin.top - margin.bottom;
 
@@ -69,6 +69,12 @@ export function loadS2() {
             .attr("dy", "-0.5em")
             .style("text-anchor", "end")
             .text(d3.max(teamsData, d => d.Followers).toLocaleString());
+
+        yAxis.selectAll("g.tick:last-of-type text")
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "-1.5em")
+            .text(d3.max(teamsData, d => d.Followers).toLocaleString())
 
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
