@@ -17,7 +17,7 @@ export function loadS4() {
 
         const margin = { top: 20, right: 20, bottom: 150, left: 150 };
         const width = 1400 - margin.left - margin.right;
-        const height = 500 - margin.top - margin.bottom;
+        const height = 900 - margin.top - margin.bottom;
 
         const svg = container.append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -27,11 +27,11 @@ export function loadS4() {
 
         const x = d3.scaleLinear()
             .range([0, width])
-            .domain([d3.min(data, d => d.BPM) - 1, d3.max(data, d => d.BPM) + 1]);
+            .domain([0, d3.max(data, d => d.Followers)]);
 
         const y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, d3.max(data, d => d.Followers)]);
+            .domain([d3.min(data, d => d.BPM) - 1, d3.max(data, d => d.BPM) + 1]);
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
@@ -49,12 +49,12 @@ export function loadS4() {
             .enter().append("circle")
             .attr("cx", d => x(d.BPM))
             .attr("cy", d => y(d.Followers))
-            .attr("r", 5)
+            .attr("r", 15)
             .style("fill", d => teamColors[d.Team] || "#69b3a2")
             .on("mouseover", function(event, d) {
                 d3.select(this).transition()
                     .duration(200)
-                    .attr("r", 10);
+                    .attr("r", 13);
 
                 tooltip.transition()
                     .duration(200)
@@ -66,7 +66,7 @@ export function loadS4() {
             .on("mouseout", function(d) {
                 d3.select(this).transition()
                     .duration(200)
-                    .attr("r", 5);
+                    .attr("r", 10);
 
                 tooltip.transition()
                     .duration(500)
