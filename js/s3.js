@@ -10,15 +10,22 @@ export function loadS3() {
     container.append("h1").text("NBA Team Wins vs Instagram Followers");
 
     d3.csv("data/teams.csv").then(data => {
+        data.forEach(d => {
+            d.Wins = +d.Wins;
+            d.Followers = +d.Followers;
+            console.log(`Team: ${d.Team}, Wins: ${d.Wins}, Followers: ${d.Followers}`);
+        });
+
+    d3.csv("data/teams.csv").then(data => {
         const margin = { top: 20, right: 20, bottom: 50, left: 60 };
         const width = 960 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
-        console.log(`Team: ${d.Team}, Wins: ${d.Wins}, Followers: ${d.Followers}`);
+        
 
         const svg = container.append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-          .append("g")
+            .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
         const x = d3.scaleLinear()
@@ -28,9 +35,6 @@ export function loadS3() {
         const y = d3.scaleLinear()
             .range([height, 0])
             .domain([0, d3.max(data, d => +d.followers)]);
-
-        const color = d3.scaleOrdinal(d3.schemeCategory10)
-            .domain(data.map(d => d.team));
 
         svg.append("g")
             .selectAll("circle")
