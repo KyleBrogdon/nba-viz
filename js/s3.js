@@ -16,7 +16,7 @@ export function loadS3() {
             console.log(`Team: ${d.Team}, Wins: ${d.Wins}, Followers: ${d.Followers}`);
         });
 
-        const margin = { top: 20, right: 20, bottom: 150, left: 150 };
+        const margin = { top: 50, right: 20, bottom: 200, left: 150 };
         const width = 1400 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
 
@@ -58,7 +58,7 @@ export function loadS3() {
                 console.log(`Team: ${d.Team}, Wins: ${d.Wins}, CY: ${cy}`);
                 return cy;
             })
-            .attr("r", 10)
+            .attr("r", 14)
             .style("fill", d => {
                 const color = teamColors[d.Team] || "#69b3a2";
                 console.log(`Team: ${d.Team}, Color: ${color}`);
@@ -69,7 +69,7 @@ export function loadS3() {
                     .duration(200)
                     .style("opacity", .9);
                 tooltip.html(`Team: ${d.Team}<br/>Wins: ${d.Wins}<br/>Followers: ${d.Followers}`)
-                    .style("left", (event.pageX + 5) + "px")
+                    .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function(d) {
@@ -77,6 +77,7 @@ export function loadS3() {
                     .duration(500)
                     .style("opacity", 0);
             });
+
 
         svg.append("text")
             .attr("transform", `translate(${width / 2},${height + margin.bottom - 40})`)
