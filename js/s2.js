@@ -20,8 +20,8 @@ export function loadS2() {
         data.sort((a, b) => d3.descending(a.Followers, b.Followers));
 
         const margin = { top: 20, right: 20, bottom: 160, left: 150 }; 
-        const width = 1300 - margin.left - margin.right;
-        const height = 700 - margin.top - margin.bottom;
+        const width = 1400 - margin.left - margin.right;
+        const height = 900 - margin.top - margin.bottom;
 
         const svg = container.append("svg")
             .attr("width", width + margin.left + margin.right)
