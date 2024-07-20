@@ -13,6 +13,7 @@ export function loadS2() {
     d3.csv("data/teams.csv").then(data => {
         data.forEach(d => {
             d.Followers = +d.Followers;
+            console.log(d.Team, teamColors[d.Team]);
             if (isNaN(d.Followers)) {
                 console.error(`Invalid follower count for ${d.Team}: ${d.Followers}`);
             } else {
