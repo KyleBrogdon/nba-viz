@@ -9,7 +9,9 @@ body {
 
 .bar {
     fill: none;
+    stroke: none; 
 }
+
 
 .axis-label {
     font-size: 14px;
