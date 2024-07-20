@@ -12,7 +12,7 @@ export function loadS4() {
         data.forEach(d => {
             d.BPM = +d.BPM; 
             d.Followers = +d.Followers; 
-            console.log(`player: ${d.Player}, BPM: ${d.BPM}, Followers: ${d.Followers}`);
+            console.log(`player: ${d.player}, BPM: ${d.BPM}, Followers: ${d.Followers}`);
         });
         // const filteredData = data.filter(d => !isNaN(d.BPM) && !isNaN(d.Followers));
 
