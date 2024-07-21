@@ -71,7 +71,7 @@ export function loadS4() {
             .attr("cy", d => y(d.BPM))
             .attr("r", 12)
             .style("fill", d => {
-                const color = teamColors[d.Team].color || "#69b3a2";
+                const color = teamColors[d.Team]?.color || "#69b3a2";
                 return color;
             })
             .on("mouseover", function(event, d) {
