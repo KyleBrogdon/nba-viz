@@ -87,7 +87,7 @@ export function loadS2() {
                     d3.select(this).transition()
                         .duration(200)
                         .style("fill", d => {
-                            const color = teamColors[d.Team] ? d3.rgb(teamColors[d.Team]).darker(1) : "#69b3a2";
+                            const color = teamColors[d.Team].color ? d3.rgb(teamColors[d.Team]).darker(1) : "#69b3a2";
                             return color;
                         });
                         
