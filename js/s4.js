@@ -18,7 +18,7 @@ export function loadS4() {
             }
         });
 
-        const margin = { top: 50, right: 20, bottom: 150, left: 150 };
+        const margin = { top: 50, right: 20, bottom: 80, left: 150 };
         const width = 1400 - margin.left - margin.right;
         const height = 900 - margin.top - margin.bottom;
 

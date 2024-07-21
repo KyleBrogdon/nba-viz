@@ -15,7 +15,7 @@ export function loadS3() {
             console.log(`Team: ${d.Team}, Wins: ${d.Wins}, Followers: ${d.Followers}`);
         });
 
-        const margin = { top: 50, right: 20, bottom: 120, left: 120 };
+        const margin = { top: 50, right: 20, bottom: 70, left: 120 };
         const width = 1400 - margin.left - margin.right;
         const height = 900 - margin.top - margin.bottom;
 
