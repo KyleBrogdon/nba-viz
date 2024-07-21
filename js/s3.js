@@ -15,9 +15,9 @@ export function loadS3() {
             console.log(`Team: ${d.Team}, Wins: ${d.Wins}, Followers: ${d.Followers}`);
         });
 
-        const margin = { top: 50, right: 20, bottom: 50, left: 120 };
+        const margin = { top: 50, right: 20, bottom: 100, left: 120 };
         const width = 1400 - margin.left - margin.right;
-        const height = 800 - margin.top - margin.bottom;
+        const height = 700 - margin.top - margin.bottom;
 
         const svg = container.append("svg")
             .attr("width", width + margin.left + margin.right)
