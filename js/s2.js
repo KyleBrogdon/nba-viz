@@ -79,7 +79,7 @@ export function loadS2() {
                 .attr("y", d => y(d.Followers))
                 .attr("height", d => height - y(d.Followers))
                 .style("fill", d => {
-                    const color = teamColors[d.Team] || "#69b3a2";
+                    const color = teamColors[d.Team].color || "#69b3a2";
                     console.log(`Team: ${d.Team}, Color: ${color}`); // Debugging: Check color assignment
                     return color;
                 })
