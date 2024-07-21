@@ -18,9 +18,9 @@ export function loadS4() {
             }
         });
 
-        const margin = { top: 50, right: 20, bottom: 80, left: 150 };
+        const margin = { top: 50, right: 20, bottom: 50, left: 100 };
         const width = 1400 - margin.left - margin.right;
-        const height = 900 - margin.top - margin.bottom;
+        const height = 800 - margin.top - margin.bottom;
 
         const svg = container.append("svg")
             .attr("width", width + margin.left + margin.right)

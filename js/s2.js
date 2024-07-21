@@ -16,9 +16,9 @@ export function loadS2() {
         teamsData.sort((a, b) => b.Followers - a.Followers);
 
         d3.csv("data/merged_players_bpm.csv").then(mergedPlayers => {
-            const margin = { top: 30, right: 20, bottom: 140, left: 150 };
+            const margin = { top: 30, right: 20, bottom: 90, left: 100 };
             const width = 1400 - margin.left - margin.right;
-            const height = 900 - margin.top - margin.bottom;
+            const height = 800 - margin.top - margin.bottom;
 
             const svg = container.append("svg")
                 .attr("width", width + margin.left + margin.right)
