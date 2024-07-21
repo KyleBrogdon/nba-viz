@@ -109,7 +109,7 @@ export function loadS4() {
             .style("text-anchor", "middle")
             .text("Player BPM");
 
-            const legend = svg.append("g")
+        const legend = svg.append("g")
             .attr("class", "legend")
             .attr("transform", `translate(${width + 20}, 0)`);
 

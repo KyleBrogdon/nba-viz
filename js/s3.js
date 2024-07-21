@@ -101,9 +101,11 @@ export function loadS3() {
             .style("text-anchor", "middle")
             .text("Team Wins");
 
-            const legend = svg.append("g")
+            const legend = container.append("svg")
             .attr("class", "legend")
-            .attr("transform", `translate(${width + 20}, 0)`);
+            .attr("width", 200)
+            .attr("height", height + margin.top + margin.bottom)
+            .attr("transform", `translate(${width + margin.left + 40}, 0)`);
 
         const legendEntries = Object.keys(teamColors);
         legend.selectAll("rect")
