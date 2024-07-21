@@ -16,7 +16,7 @@ export function loadS2() {
         teamsData.sort((a, b) => b.Followers - a.Followers);
 
         d3.csv("data/merged_players_bpm.csv").then(mergedPlayers => {
-            const margin = { top: 10, right: 20, bottom: 200, left: 100 };
+            const margin = { top: 10, right: 20, bottom: 215, left: 100 };
             const width = 1400 - margin.left - margin.right;
             const height = 700 - margin.top - margin.bottom;
 
@@ -117,7 +117,7 @@ export function loadS2() {
                 container.append("div")
                 .attr("class", "footnote")
                 .append("p")
-                .text("ANNOTATION: The Warriors, Lakers, and Cavaliers are the only teams > 15 million followers, with most other teams in a relatively normal distribution from 10 million and below. On the next slide you'll see if current team success is directly corrolated with popularity. Hover any team for more details");
+                .text("ANNOTATION: The Warriors, Lakers, and Cavaliers are the only teams > 15 million followers, with most other teams in a relatively normal distribution from 10 million and below. On the next slide you'll see if current team success is directly corrolated with popularity. Hover any team for more details, or click next to continue / previous to go back..");
 
             container.append("button")
                 .text("Previous")

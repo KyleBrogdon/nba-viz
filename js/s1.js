@@ -14,7 +14,7 @@ export function loadS1() {
 
     container.append("p").text("This interactive slideshow will compare the most popular NBA teams and players on social media with both team success and individual player contribution to that team success. Primary metrics used are team wins, team instagram followers, player instagram followers, and Box Plus-Minus (BPM). BPM is a box score-based metric for evaluating basketball players' quality and contribution to the team.");
 
-    container.append("p").text("All stats are from the 2023-2024 season and all follower counts are current as of July 2024.  Players who did not participate in enough games to be eligible for advanced stats such as BPM are excluded from this list.")
+    container.append("p").text("All stats are from the 2023-2024 season and all follower counts are current as of July 2024.  Players who did not participate in enough games to be eligible for advanced stats such as BPM are excluded from this list. Click next to begin.")
 
     const buttonContainer = container.append("div")
         .attr("class", "s1-button-container");

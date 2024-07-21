@@ -113,7 +113,7 @@ export function loadS4() {
         container.append("div")
                 .attr("class", "footnote")
                 .append("p")
-                .text("ANNOTATION: Generally speaking, the more popular the player, the more they contribute to their team's success / display individual talent. There are some significant outliers, such as Jokic with over 13 BPM while only having ~300k followers, but the clustering on the bottom left of the image shows that lesser impactful players have less of a media presence. Hover over any data point for more details. Click return to see this study again.");
+                .text("ANNOTATION: Generally speaking, the more popular the player, the more they contribute to their team's success / display individual talent. There are some significant outliers, such as Jokic with over 13 BPM while only having ~300k followers, but the clustering on the bottom left of the image shows that lesser impactful players have less of a media presence. Hover over any data point for more details. Click previous to go back or return to see this study again.");
 
         container.append("button")
             .text("Previous")

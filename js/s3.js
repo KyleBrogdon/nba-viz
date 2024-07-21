@@ -104,7 +104,7 @@ export function loadS3() {
             container.append("div")
             .attr("class", "footnote")
             .append("p")
-            .text("ANNOTATION: You can see that for this season, the most popular teams were middle of the pack, hovering in the 46-48 win range, while some of the middle of the pack popularity teams were significantly more succesful, such as the Nuggets, Celtics, and Thunder. Hover over any data point for more details.");
+            .text("ANNOTATION: You can see that for this season, the most popular teams were middle of the pack, hovering in the 46-48 win range, while some of the middle of the pack popularity teams were significantly more succesful, such as the Nuggets, Celtics, and Thunder. Hover over any data point for more details, or click next to continue / previous to go back.");
         
         container.append("button")
             .text("Previous")
