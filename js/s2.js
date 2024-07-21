@@ -16,7 +16,7 @@ export function loadS2() {
         teamsData.sort((a, b) => b.Followers - a.Followers);
 
         d3.csv("data/merged_players_bpm.csv").then(mergedPlayers => {
-            const margin = { top: 50, right: 20, bottom: 150, left: 150 };
+            const margin = { top: 50, right: 20, bottom: 200, left: 150 };
             const width = 1400 - margin.left - margin.right;
             const height = 900 - margin.top - margin.bottom;
 
@@ -78,11 +78,19 @@ export function loadS2() {
                 .attr("width", x.bandwidth())
                 .attr("y", d => y(d.Followers))
                 .attr("height", d => height - y(d.Followers))
-                .style("fill", d => teamColors[d.Team] || "#69b3a2")
+                .style("fill", d => {
+                    const color = teamColors[d.Team] || "#69b3a2";
+                    console.log(`Team: ${d.Team}, Color: ${color}`); // Debugging: Check color assignment
+                    return color;
+                })
                 .on("mouseover", function(event, d) {
                     d3.select(this).transition()
                         .duration(200)
-                        .style("fill", d => teamColors[d.Team] ? d3.rgb(teamColors[d.Team]).darker(1) : "#69b3a2");
+                        .style("fill", d => {
+                            const color = teamColors[d.Team] ? d3.rgb(teamColors[d.Team]).darker(1) : "#69b3a2";
+                            return color;
+                        });
+                        
 
                     const player = mergedPlayers.find(p => p.Team === d.Team);
                     const mostFollowedPlayer = player ? player.player : "N/A";
@@ -96,8 +104,10 @@ export function loadS2() {
                 })
                 .on("mouseout", function(d) {
                     d3.select(this).transition()
-                        .duration(200)
-                        .style("fill", d => teamColors[d.Team] || "#69b3a2");
+                    .style("fill", d => {
+                        const color = teamColors[d.Team] || "#69b3a2";
+                        return color;
+                    });
 
                     tooltip.transition()
                         .duration(500)
