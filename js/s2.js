@@ -105,7 +105,7 @@ export function loadS2() {
                 .on("mouseout", function(d) {
                     d3.select(this).transition()
                     .style("fill", d => {
-                        const color = teamColors[d.Team] || "#69b3a2";
+                        const color = teamColors[d.Team].color || "#69b3a2";
                         return color;
                     });
 
