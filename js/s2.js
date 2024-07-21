@@ -53,6 +53,19 @@ export function loadS2() {
                 .style("text-anchor", "end")
                 .text(d3.max(teamsData, d => d.Followers).toLocaleString());
 
+                svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("Team Instagram Followers");
+
+            svg.append("text")
+                .attr("transform", `translate(${width / 2},${height + margin.bottom - 100})`)
+                .style("text-anchor", "middle")
+                .text("Teams");
+
             const tooltip = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
