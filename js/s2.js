@@ -121,6 +121,11 @@ export function loadS2() {
             container.append("button")
                 .text("Next")
                 .on("click", loadS3);
+
+            container.append("div")
+                .attr("class", "footnote")
+                .append("p")
+                .text("The Warriors, Lakers, and Cavaliers are the only teams > 15 million followers, with most other teams in a relatively normal distribution from 10 million and below. On the next slide you'll see if current team success is directly corrolated with popularity.");
         }).catch(error => console.log("Error loading merged players data for S2: ", error));
     }).catch(error => console.log("Error loading data for S2: ", error));
 }

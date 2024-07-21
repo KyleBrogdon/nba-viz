@@ -33,3 +33,12 @@ body {
 .hidden {
     display: none;
 }
+
+.button-container-s1 {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-s1 {
+    margin-top: 20px;
+}
