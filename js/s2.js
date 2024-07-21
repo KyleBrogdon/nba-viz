@@ -114,6 +114,11 @@ export function loadS2() {
                         .style("opacity", 0);
                 });
 
+                container.append("div")
+                .attr("class", "footnote")
+                .append("p")
+                .text("ANNOTATION: The Warriors, Lakers, and Cavaliers are the only teams > 15 million followers, with most other teams in a relatively normal distribution from 10 million and below. On the next slide you'll see if current team success is directly corrolated with popularity. Hover any team for more details");
+
             container.append("button")
                 .text("Previous")
                 .on("click", loadS1);
@@ -122,10 +127,6 @@ export function loadS2() {
                 .text("Next")
                 .on("click", loadS3);
 
-            container.append("div")
-                .attr("class", "footnote")
-                .append("p")
-                .text("The Warriors, Lakers, and Cavaliers are the only teams > 15 million followers, with most other teams in a relatively normal distribution from 10 million and below. On the next slide you'll see if current team success is directly corrolated with popularity.");
         }).catch(error => console.log("Error loading merged players data for S2: ", error));
     }).catch(error => console.log("Error loading data for S2: ", error));
 }

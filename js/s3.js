@@ -15,7 +15,7 @@ export function loadS3() {
             console.log(`Team: ${d.Team}, Wins: ${d.Wins}, Followers: ${d.Followers}`);
         });
 
-        const margin = { top: 50, right: 20, bottom: 150, left: 150 };
+        const margin = { top: 50, right: 20, bottom: 120, left: 120 };
         const width = 1400 - margin.left - margin.right;
         const height = 900 - margin.top - margin.bottom;
 
@@ -101,6 +101,11 @@ export function loadS3() {
             .style("text-anchor", "middle")
             .text("Team Wins");
 
+            container.append("div")
+            .attr("class", "footnote")
+            .append("p")
+            .text("ANNOTATION: You can see that for this season, the most popular teams were middle of the pack, hovering in the 46-48 win range, while some of the middle of the pack popularity teams were significantly more succesful, such as the Nuggets, Celtics, and Thunder. Hover over any data point for more details.");
+        
         container.append("button")
             .text("Previous")
             .on("click", loadS2);
@@ -108,5 +113,7 @@ export function loadS3() {
         container.append("button")
             .text("Next")
             .on("click", loadS4);
+
+        
     }).catch(error => console.log("Error loading data for S3: ", error));
 }
