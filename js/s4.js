@@ -70,7 +70,10 @@ export function loadS4() {
             .attr("cx", d => x(d.Followers))
             .attr("cy", d => y(d.BPM))
             .attr("r", 12)
-            .style("fill", d => teamColors[d.Team].color || "#69b3a2")
+            .style("fill", d => {
+                const color = teamColors[d.Team].color || "#69b3a2";
+                return color;
+            })
             .on("mouseover", function(event, d) {
                 d3.select(this).transition()
                     .duration(200)
