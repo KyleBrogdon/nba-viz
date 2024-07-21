@@ -101,33 +101,6 @@ export function loadS3() {
             .style("text-anchor", "middle")
             .text("Team Wins");
 
-            const legend = container.append("svg")
-            .attr("class", "legend")
-            .attr("width", 200)
-            .attr("height", height + margin.top + margin.bottom)
-            .attr("transform", `translate(${width + margin.left + 40}, 0)`);
-
-        const legendEntries = Object.keys(teamColors);
-        legend.selectAll("rect")
-            .data(legendEntries)
-            .enter()
-            .append("rect")
-            .attr("x", 0)
-            .attr("y", (d, i) => i * 20)
-            .attr("width", 18)
-            .attr("height", 18)
-            .style("fill", d => teamColors[d].color);
-
-        legend.selectAll("text")
-            .data(legendEntries)
-            .enter()
-            .append("text")
-            .attr("x", 24)
-            .attr("y", (d, i) => i * 20 + 9)
-            .attr("dy", "0.35em")
-            .style("text-anchor", "start")
-            .text(d => teamColors[d].abbrev);
-
         container.append("button")
             .text("Previous")
             .on("click", loadS2);
